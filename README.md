@@ -21,8 +21,8 @@ If you found this task it means we are looking for you!
 
 *Note:* The bonus requirements are optional. While they are nice to have, it's much more important to have the basics nailed.
 
-## Approach to the task ##
-# Main points when designing the solution for this task were simplicity, scalability and maintainability.
+# Approach to the task #
+## Main points when designing the solution for this task were simplicity, scalability and maintainability. ##
 Project design based on [Model View View-Model](https://codingwithmitch.com/blog/getting-started-with-mvvm-android/) 
 
 Tools used in the project:

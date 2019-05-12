@@ -1,6 +1,8 @@
 package com.dante210.tesonetparty
 
+import android.app.Activity
 import android.app.Application
+import androidx.navigation.Navigation.findNavController
 import com.dante210.tesonetparty.api.TesonetApi
 import com.dante210.tesonetparty.api.TesonetInterceptor
 import com.dante210.tesonetparty.repositories.UserRemoteRepository
@@ -10,6 +12,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
+import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
