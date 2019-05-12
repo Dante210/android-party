@@ -1,6 +1,8 @@
 package com.dante210.tesonetparty.ui
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.dante210.tesonetparty.data.*
@@ -11,11 +13,13 @@ import io.reactivex.schedulers.Schedulers
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
-class SignInViewModel(private val remoteRepository: UserRemoteRepository) : ViewModel() {
+class SignInViewModel(private val remoteRepository: UserRemoteRepository, private val context: Context) : ViewModel() {
   companion object {
     val module = module {
-      viewModel { SignInViewModel(get()) }
+      viewModel { SignInViewModel(get(), get()) }
     }
+
+    private val TAG : String = SignInViewModel::class.java.simpleName
   }
 
   val usernameRx = MutableLiveData<Username>()
@@ -24,23 +28,26 @@ class SignInViewModel(private val remoteRepository: UserRemoteRepository) : View
   fun onSignInClick() {
     handleSignIn()
       .fold(
-        onLeft = { tokenSingle ->
+        onLeft= { errorMsg ->
+          Toast.makeText(context, errorMsg.value, Toast.LENGTH_SHORT).show()
+          Unit
+        },
+        onRight = { tokenSingle ->
             tokenSingle
               .subscribeOn(Schedulers.io())
               .observeOn(Schedulers.single())
               .subscribeBy(
-                onError = { throwable -> Log.e("TEST", throwable.message) },
-                onSuccess = { token -> Log.d("TEST", "Token = $token") })
+                onError = { throwable ->
+                  Log.e(TAG, throwable.message)
+                  // Todo give feedback to the user
+                },
+                onSuccess = { token -> Log.d("TEST", "Token = ${token.value}") })
             Unit
-        },
-        onRight = { errorMsg ->
-          Log.e("TEST", "error = $errorMsg")
-          Unit
         }
       )
   }
 
-  private fun handleSignIn(): Result<Single<Token>, ErrorMsg> {
+  private fun handleSignIn(): Either<ErrorMsg, Single<Token>> {
     val username = usernameRx.value
     val password = passwordRx.value
 
@@ -49,7 +56,7 @@ class SignInViewModel(private val remoteRepository: UserRemoteRepository) : View
         username.value.isBlank() -> ErrorMsg("Please enter your username").toError()
         password.value.isBlank() -> ErrorMsg("Please enter your password").toError()
         else -> {
-          Success(remoteRepository.signIn(username, password))
+          Right(remoteRepository.signIn(username, password))
         }
       }
     }

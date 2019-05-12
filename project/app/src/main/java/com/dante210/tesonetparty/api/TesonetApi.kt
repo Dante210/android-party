@@ -24,7 +24,12 @@ interface TesonetApi {
 
   @POST(TOKENS_URL) @FormUrlEncoded
   fun signIn(@Field("username") username : String, @Field("password") password : String) : Single<Token>
+
+  @POST(SERVERS_URL)
+  fun getServersList() : Single<List<ResponseFromServer>>
 }
+
+data class ResponseFromServer(val value: String)
 
 class TesonetInterceptor : Interceptor {
   override fun intercept(chain: Interceptor.Chain): Response {

@@ -8,5 +8,15 @@
         android:id="@+id/sign_in_fragment"
         android:name="com.dante210.tesonetparty.ui.SignInFragment"
         android:label="sign_in_fragment"
-        tools:layout="@layout/sign_in_fragment" />
+        tools:layout="@layout/sign_in_fragment" >
+        <action
+            android:id="@+id/action_sign_in_fragment_to_loadingFragment"
+            app:destination="@id/loadingFragment"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/loadingFragment"
+        android:name="com.dante210.tesonetparty.ui.LoadingFragment"
+        android:label="loading_fragment"
+        tools:layout="@layout/loading_fragment" />
 </navigation>
