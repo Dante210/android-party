@@ -3,6 +3,7 @@ package com.dante210.tesonetparty.ui
 import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.dante210.tesonetparty.api.TesonetApi
 import com.dante210.tesonetparty.data.*
 import com.dante210.tesonetparty.repositories.UserRemoteRepository
 import io.reactivex.Single
@@ -19,7 +20,7 @@ class SignInViewModel(private val remoteRepository: UserRemoteRepository, privat
   val usernameRx = MutableLiveData<Username>()
   val passwordRx = MutableLiveData<Password>()
 
-  fun onSignInClick(): Either<ErrorMsg, Single<Token>> {
+  fun onSignInClick(): Either<ErrorMsg, Single<TesonetApi.Token>> {
     val username = usernameRx.value
     val password = passwordRx.value
 

@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavController
 import androidx.navigation.fragment.findNavController
 import com.dante210.tesonetparty.R
 import com.dante210.tesonetparty.data.Password
@@ -17,9 +16,7 @@ import com.jakewharton.rxbinding.widget.RxTextView
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.sign_in_fragment.*
-import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import org.koin.core.parameter.parametersOf
 
 class SignInFragment : Fragment() {
   companion object {
@@ -69,7 +66,8 @@ class SignInFragment : Fragment() {
 //                    Toast.makeText(context, throwable.message, Toast.LENGTH_SHORT).show()
                   },
                   onSuccess = { token ->
-                    Log.d(TAG, "Token = ${token.value}")
+                    Log.d(TAG, "Token = ${token.token}")
+
                     findNavController().navigate(R.id.loadingFragment)
                   }
                 )

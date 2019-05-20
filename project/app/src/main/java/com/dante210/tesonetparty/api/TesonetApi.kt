@@ -1,9 +1,7 @@
 package com.dante210.tesonetparty.api
 
 import com.dante210.tesonetparty.MyApplication
-import com.dante210.tesonetparty.data.Password
-import com.dante210.tesonetparty.data.Token
-import com.dante210.tesonetparty.data.Username
+import com.squareup.moshi.Json
 import io.reactivex.Single
 import okhttp3.Interceptor
 import okhttp3.Response
@@ -21,6 +19,11 @@ interface TesonetApi {
       single { MyApplication.retrofit.create(TesonetApi::class.java) }
     }
   }
+
+  data class Token (
+    // Variable name `token` is used as key when parsing the JSON file!
+    val token : String
+  )
 
   @POST(TOKENS_URL) @FormUrlEncoded
   fun signIn(@Field("username") username : String, @Field("password") password : String) : Single<Token>
